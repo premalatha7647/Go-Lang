@@ -34,8 +34,14 @@ func main() {
 	// Future Real value: %v`, futureValue, futureRealValue)
 }
 
-func investmentCalc(investment, expectedReturn, years float64) (float64, float64) {
-	fv := investment * math.Pow((1+expectedReturn/100), years)
-	frv := fv / math.Pow(1+inflationRate/100, years)
+// func investmentCalc(investment, expectedReturn, years float64) (float64, float64) {
+// 	fv := investment * math.Pow((1+expectedReturn/100), years)
+// 	frv := fv / math.Pow(1+inflationRate/100, years)
+// 	return fv, frv
+// }
+
+func investmentCalc(investment, expectedReturn, years float64) (fv float64, frv float64) {
+	fv = investment * math.Pow((1+expectedReturn/100), years)
+	frv = fv / math.Pow(1+inflationRate/100, years)
 	return fv, frv
 }
