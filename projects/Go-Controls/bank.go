@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 )
+
+var balanceFile = "balance.txt"
 
 func main() {
 
-	var accountBalance = 1000.0
+	var accountBalance = readBalanceFile()
 
 	fmt.Println("Welcome to bank")
 	// for i := 0; i < 2; i++ {
@@ -39,6 +43,7 @@ func main() {
 			}
 			accountBalance -= withdraw
 			fmt.Println("Updated balance:", accountBalance)
+			writeBalanceFile(accountBalance)
 		default:
 			fmt.Print("GoodBye!")
 			fmt.Print("Thank you for banking wit us!")
@@ -72,4 +77,15 @@ func main() {
 		// }
 	}
 
+}
+
+func writeBalanceFile(balance float64) {
+	balanceTxt := fmt.Sprint(balance)
+	os.WriteFile(balanceFile, []byte(balanceTxt), 0644)
+}
+func readBalanceFile() float64 {
+	data, _ := os.ReadFile(balanceFile)
+	balanceTxt := string(data)
+	balance, _ := strconv.ParseFloat(balanceTxt, 64)
+	return balance
 }
