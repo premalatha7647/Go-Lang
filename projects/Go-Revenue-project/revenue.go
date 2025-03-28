@@ -1,27 +1,51 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"os"
+)
 
 func main() {
-	var revenue float64
-	var expenses float64
-	var taxRate float64
 
-	revenue = getValue("Revenue")
-	expenses = getValue("Expenses")
-	taxRate = getValue("Tax Rate")
+	var err error
+	revenue, err := getValue("Revenue")
+	// if err != nil {
+	// 	fmt.Println("ERROR:", err)
+	// 	return
+	// }
+	expenses, err := getValue("Expenses")
+	// if err != nil {
+	// 	fmt.Println("ERROR", err)
+	// 	return
+	// }
+	taxRate, err := getValue("Tax Rate")
+	if err != nil {
+		fmt.Println("ERROR", err)
+		return
+	}
 
 	ebt := expenseBeforeTax(revenue, expenses)
 	profit := profit(ebt, taxRate)
 	ratio := ratio(ebt, profit)
 
 	outputPrint(ebt, profit, ratio)
+	data := fmt.Sprintf("EBT: %f\nProfit: %f\nratio: %f", ebt, profit, ratio)
+	os.WriteFile("investment.txt", []byte(data), 0644)
 }
 
-func getValue(text string) (val float64) {
+func getValue(text string) (float64, error) {
 	fmt.Printf("%v : ", text)
+	var val float64
 	fmt.Scan(&val)
-	return val
+	// if val <= 0 {
+	// 	panic("Invalid input")
+	// }
+	// return val
+	if val <= 0 {
+		return 0, errors.New("invalid input")
+	}
+	return val, nil
 }
 
 func expenseBeforeTax(revenue, expenses float64) float64 {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -10,8 +11,12 @@ var balanceFile = "balance.txt"
 
 func main() {
 
-	var accountBalance = readBalanceFile()
-
+	var accountBalance, err = readBalanceFile()
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		panic("cant continue, sorry!")
+	}
 	fmt.Println("Welcome to bank")
 	// for i := 0; i < 2; i++ {
 	for {
@@ -32,6 +37,8 @@ func main() {
 			fmt.Scan(&depositAmount)
 			accountBalance += depositAmount
 			fmt.Println("Updated Balance:", accountBalance)
+			writeBalanceFile(accountBalance)
+
 		case 3:
 			var withdraw float64
 			fmt.Print("Enter the amout to withdraw:")
@@ -81,11 +88,19 @@ func main() {
 
 func writeBalanceFile(balance float64) {
 	balanceTxt := fmt.Sprint(balance)
-	os.WriteFile(balanceFile, []byte(balanceTxt), 0644)
+	err := os.WriteFile("balance.txt", []byte(balanceTxt), 0644)
+	fmt.Println(err)
 }
-func readBalanceFile() float64 {
-	data, _ := os.ReadFile(balanceFile)
+func readBalanceFile() (float64, error) {
+	data, err := os.ReadFile(balanceFile)
+	if err != nil {
+		return 1000, errors.New("failed to find the balance file")
+
+	}
 	balanceTxt := string(data)
-	balance, _ := strconv.ParseFloat(balanceTxt, 64)
-	return balance
+	balance, err := strconv.ParseFloat(balanceTxt, 64)
+	if err != nil {
+		return 1000, errors.New("failed to parse the value")
+	}
+	return balance, nil
 }
