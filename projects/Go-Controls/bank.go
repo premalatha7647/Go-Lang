@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"example.com/controls/fileops"
+	"github.com/Pallinder/go-randomdata"
 )
 
 var balanceFile = "balance.txt"
@@ -17,15 +18,14 @@ func main() {
 		// panic("cant continue, sorry!")
 	}
 	fmt.Println("Welcome to bank")
+	fmt.Println(randomdata.PhoneNumber())
 	// for i := 0; i < 2; i++ {
 	for {
-		fmt.Println("1: Check balance")
-		fmt.Println("2: Deposit money")
-		fmt.Println("3: Withdraw money")
-		fmt.Println("4: Exit")
+		userChoice()
 		var choice int
 		fmt.Print("Your choice: ")
 		fmt.Scan(&choice)
+		fmt.Println(&choice)
 
 		switch choice {
 		case 1:
