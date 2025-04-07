@@ -4,6 +4,13 @@ import (
 	"fmt"
 )
 
+type user struct {
+	firstName string,
+	lastName string,
+	bithDate string
+	createdAt time.Time
+}
+
 func main() {
 
 	firstName := getValue("Enter your first name: ")
