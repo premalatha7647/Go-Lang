@@ -12,6 +12,11 @@ type user struct {
 	createdAt time.Time
 }
 
+// struct methods -- called receiver
+func (u user) outputUserDetails() {
+	// fmt.Println((*u).firstName, (*u).lastName, (*u).bithDate, (*u).createdAt)
+	fmt.Println(u.firstName, u.lastName, u.bithDate, u.createdAt)
+}
 func main() {
 
 	userFirstName := getValue("Enter your first name: ")
@@ -24,11 +29,14 @@ func main() {
 		bithDate:  userBirthDate,
 		createdAt: time.Now(),
 	}
-	outputUserDetails(appUser)
+	// outputUserDetails(&appUser)
+	appUser.outputUserDetails()
 }
-func outputUserDetails(u user) {
-	fmt.Println(u.firstName, u.lastName, u.bithDate, u.createdAt)
-}
+
+//	func outputUserDetails(u *user) {
+//		// fmt.Println((*u).firstName, (*u).lastName, (*u).bithDate, (*u).createdAt)
+//		fmt.Println(u.firstName, u.lastName, u.bithDate, u.createdAt)
+//	}
 func getValue(text string) string {
 	fmt.Print(text)
 	var value string
