@@ -17,6 +17,16 @@ func (u user) outputUserDetails() {
 	// fmt.Println((*u).firstName, (*u).lastName, (*u).bithDate, (*u).createdAt)
 	fmt.Println(u.firstName, u.lastName, u.bithDate, u.createdAt)
 }
+
+func (u *user) clearUserData() {
+	u.firstName = ""
+	u.lastName = ""
+}
+
+//	func (u user) clearUserData() {
+//		u.firstName = ""
+//		u.lastName = ""
+//	}
 func main() {
 
 	userFirstName := getValue("Enter your first name: ")
@@ -31,6 +41,9 @@ func main() {
 	}
 	// outputUserDetails(&appUser)
 	appUser.outputUserDetails()
+	appUser.clearUserData()
+	appUser.outputUserDetails()
+
 }
 
 //	func outputUserDetails(u *user) {
