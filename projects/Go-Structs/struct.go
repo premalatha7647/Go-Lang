@@ -11,6 +11,15 @@ func main() {
 	userFirstName := getValue("Enter your first name: ")
 	userLastName := getValue("Enter your last name: ")
 	userBirthDate := getValue("Enter your bithdate (MM/DD/YYYY): ")
+	admin := user.NewAdmin("admin@gamil.com", "admin@!23")
+
+	// admin.User.OutputUserDetails()
+	// admin.User.ClearUserData()
+	// admin.User.OutputUserDetails()
+
+	admin.OutputUserDetails()
+	admin.ClearUserData()
+	admin.OutputUserDetails()
 
 	appUser, err := user.New(userFirstName, userLastName, userBirthDate)
 	if err != nil {
